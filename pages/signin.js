@@ -17,13 +17,15 @@ function handlePasswordChange(e){
 async function SignIn(){
   alert(`Email is ${email}, Password is ${password}`)
   console.log(email, password)
-  const response = await axios.post('http://localhost:3000/api/signin', {
+  const response = await axios.post('http://localhost:3005/signin', {
       email: email,
       password: password
   })
-  console.log(response) 
   if(response){
-    window.location.assign('http://localhost:3000/home/')
+    // window.localStorage.setItem('token', response)
+    // console.log(window.localStorage.getItem('token'))
+    // alert(JSON.stringify(response))
+    window.location.assign(`http://localhost:3000/home/users/${response.data}`)
   }
   console.log(response)  
    

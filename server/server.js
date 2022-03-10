@@ -1,4 +1,3 @@
-
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -27,7 +26,8 @@ app.post('/signin', async (req, res)=>{
     await db.validateSignIn(email, password, (result)=>{
         if(result){
             sessions.username = req.body.email;
-            res.send('success');
+            console.log(sessions.username)
+            res.send(sessions.username);
           }
         else{
             res.send('Wrong username password')
@@ -35,10 +35,10 @@ app.post('/signin', async (req, res)=>{
     })
 })
 
-app.post('/getposts', async (req, res)=>{
-  console.log(req.body.email, 'fdshfgew')
-  await db.getposts(req.body.email)
-})
+// app.post('/getposts', async (req, res)=>{
+//   // console.log(req.body.email, 'fdshfgew')
+//   await db.getposts(req.body.email)
+// })
 app.post('/registration', async (req, res)=>{
     
   await db.validateRegistration(req.body.name, req.body.email, req.body.password, (result)=>{
@@ -54,7 +54,14 @@ app.post('/registration', async (req, res)=>{
   res.send('HI')
 })
 
+app.post('/getposts', async (req, res)=>{
+  const result = await db.getposts(req.body.email)
+  console.log(result, 'fff')
+  res.send(result)
+})
+
 app.post('/addpost', async (req, res)=>{
+  console.log(req.body)
   db.addpost(req.body.title, req.body.post, req.body.email)
   res.send('HI')
 })

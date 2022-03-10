@@ -27,12 +27,21 @@ module.exports = {
         const collection = db.collection('users')
         await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post}}})
     },
+    // getposts: async function(email){
+    //     await mongoClient.connect();
+    //     const db = mongoClient.db("usersdb");
+    //     const collection = db.collection('users')
+    //     const user = await collection.findOne({email: `${email}`})
+    //     console.log(user.posts)
+    //     user.posts
+    // },
     getposts: async function(email){
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
         const collection = db.collection('users')
         const profile = await collection.findOne({email: email})
         console.log(profile.posts)
+        return(profile.posts)
         } 
     ,
     signin: async function(name, password) {
