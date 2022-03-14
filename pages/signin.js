@@ -4,8 +4,8 @@ import axios from 'axios'
 
 export default function Signin() {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const [email, setEmail] = useState('')
+const [password, setPassword] = useState('')
 
 function handleEmailChange(e){
     setEmail(e.target.value)
@@ -22,10 +22,9 @@ async function SignIn(){
       password: password
   })
   if(response){
-    // window.localStorage.setItem('token', response)
-    // console.log(window.localStorage.getItem('token'))
-    // alert(JSON.stringify(response))
-    window.location.assign(`http://localhost:3000/home/users/${response.data}`)
+    window.localStorage.setItem('token', response.data)
+    alert(response.statusText)
+    window.location.assign(`http://localhost:3000/home/users`)
   }
   console.log(response)  
    

@@ -8,15 +8,15 @@ export default function GetPosts() {
     const router = useRouter();
     const { id } = router.query;
 
-     const [posts, setPosts] = useState(null)
+     const [posts, setPosts] = useState(['a'])
+     const [coi, setCoi] = useState(['a'])
 
-    useEffect(async () => {
+    useEffect( () => {
             // fetchpost
             // console.log(await fetchpost())
             // setPosts(result.data)
             // console.log(posts,'ghdfs', result.data)
-            setPosts(await fetchpost())
-            console.log(posts)
+            fetchpost().then(u=>setPosts(u))
         }, [])
 
         const fetchpost = async () => {
@@ -26,11 +26,14 @@ export default function GetPosts() {
         }
 return (
     <div>
-        {/* {posts.map(post =>{
+        
+        {posts.map(post =>{
             <><h1>{post.title}</h1><p>{post.post}</p></>
-})} */}
-        {/* <button onClick={fetchPosts}>HUI</button> */}
-       
+})}
+        {/* <button onClick={()=>{setPosts(fetchpost())}}>HUI</button>
+       {posts} */}
+       <button onClick={setCoi(coi+1)}></button>
+       {coi}
     </div>
   )
 }

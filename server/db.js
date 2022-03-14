@@ -1,24 +1,36 @@
-const MongoClient = require("mongodb").MongoClient;
-    
-const url = "mongodb://localhost:27017/";
-const mongoClient = new MongoClient(url);
+const MongoClient = require("mongodb").MongoClient; 
+var mongoDB = 'mongodb://localhost:27017/'
+const mongoClient = new MongoClient(mongoDB);
+const bcrypt = require('bcrypt')
+const jsw = require('jsonwebtoken')
+const {secret} = require('../config')
+
+const generateAccssToken = (id, name)=>{
+    const payload = {id, name}
+    return jsw.sign(payload, secret, {expiresIn: "24"})
+}
  
 module.exports = {
-    // mongoconnect: async ()=>{
-    //     await mongoClient.connect();
-    //     const db = mongoClient.db("usersdb");
-    //     const collection = db.collection("users");
-    // },
-    registration: async function(name, email, password) {
-    try {
-        await mongoClient.connect();
-        const db = mongoClient.db("usersdb");
+    test: async function(name, password){
+        await mongoose.connect(mongoDB)
+        console.log('gdsh')
+        const db = mongoose.db("usersdb");
         const collection = db.collection("users");
-        await collection.insertOne({name, email, password, posts: []})
+        await User.create({name: name, password: password, posts: {title: '', text: ''}})
+        
+    },
+
+    signup: async function(name, email, password) {
+    try {
+        await mongoClient.connect()
+        const hashPassword = bcrypt.hashSync(password, 3)
+        const db = mongoClient.db("usersdb");
+        const collection = db.collection('users')
+        await collection.insertOne({name, email, hashPassword, posts: []})
     }catch(err) {
         console.log(err);
     } finally {
-        await mongoClient.close();
+        await mongoose.close();
     }
 },
     addpost: async function(title, post, email){
@@ -27,14 +39,7 @@ module.exports = {
         const collection = db.collection('users')
         await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post}}})
     },
-    // getposts: async function(email){
-    //     await mongoClient.connect();
-    //     const db = mongoClient.db("usersdb");
-    //     const collection = db.collection('users')
-    //     const user = await collection.findOne({email: `${email}`})
-    //     console.log(user.posts)
-    //     user.posts
-    // },
+
     getposts: async function(email){
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
@@ -44,19 +49,22 @@ module.exports = {
         return(profile.posts)
         } 
     ,
-    signin: async function(name, password) {
+    signin: async function(email, name, password) {
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
         const collection = db.collection("users");
-        await collection.findOne({email: name, password: password}, (err, result)=>{
-            if (result){
-                console.log(':)')
+        const user = await collection.findOne({email: email})
+        console.log(email, password, user)
+        if(user){
+            const validPasword = bcrypt.compareSync(password, user.hashPassword)
+            if (validPasword) {
+                const token = generateAccssToken(user._id, name)
+                return token
             }
-            else{
-                console.log(':(')
-                // res.send
-            }
-        })
+        }
+        else{
+            console.log('sd')
+        }
     },
     validateSignIn: async function(email, password, callback){
         await mongoClient.connect();

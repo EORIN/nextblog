@@ -19,20 +19,17 @@ function handleNameChange(e){
 }
 
 async function Registration(){
-  alert(`Email is ${email}, Password is ${password}`)
-  console.log(email, password)
-  const response = await axios.post('http://localhost:3000/api/signup', {
+  const response = await axios.post('http://localhost:3005/signup', {
       name: name,
       email: email,
       password: password
   })
-  console.log(response)  
-   
+  console.log(response)
 }
   return (
     <div>
       <form className="form-signin">
-        <h2 className="form-signin-heading"> Please sign in </h2>
+        <h2 className="form-signin-heading"> Please sign up </h2>
         <label htmlFor="inputEmail" className="sr-only"> Email address
         </label>
         <input type="email" onChange={handleEmailChange} id="inputEmail" className="form-control" placeholder="Email address" required autoFocus />

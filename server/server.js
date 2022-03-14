@@ -18,32 +18,25 @@ app.post('/accountdata', (req, res)=>{
     res.send(sessions.username)
 })
 
-app.post('/signin', async (req, res)=>{
-    sessions=req.session;
-    const email = req.body.email;
-    const password = req.body.password;
-    
-    await db.validateSignIn(email, password, (result)=>{
-        if(result){
-            sessions.username = req.body.email;
-            console.log(sessions.username)
-            res.send(sessions.username);
-          }
-        else{
-            res.send('Wrong username password')
-          }
-    })
+app.post('/test', (req, res)=>{
+    db.test(req.body.name, req.body.password)
+    res.send('ffsdgh')
 })
 
-// app.post('/getposts', async (req, res)=>{
-//   // console.log(req.body.email, 'fdshfgew')
-//   await db.getposts(req.body.email)
-// })
-app.post('/registration', async (req, res)=>{
-    
+app.post('/signin', async (req, res)=>{
+    const email = req.body.email;
+    const name = req.body.name;
+    const password = req.body.password;
+    const token = await db.signin(email,  name, password)
+    console.log(token)
+    return res.json(token)
+})
+
+app.post('/signup', async (req, res)=>{
+    console.log(req.body)
   await db.validateRegistration(req.body.name, req.body.email, req.body.password, (result)=>{
     if(result){
-      db.registration(req.body.name, req.body.email, req.body.password)
+      db.signup(req.body.name, req.body.email, req.body.password)
     }
     else{
       console.log(':(')

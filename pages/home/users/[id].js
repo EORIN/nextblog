@@ -2,17 +2,20 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../../cmp/Layout";
 export default function ContactId() {
-  const router = useRouter();
-  const { id } = router.query;
-  return (
+const router = useRouter();
+const { id } = router.query;
+return (
     <>
         
         <Layout id={id}>
 
         </Layout>
-            
-        <Link href={`posts/${id}`}>addPost</Link>
-        <Link href={`getposts/${id}`}>allPosts</Link>
+        
+          <div className="cotainer">
+            <Link href={`posts/${id}`}>addPost</Link>
+            <Link href={`getposts/${id}`}>{`${id}`}</Link>
+          </div>
+        
     </>
   );
 }

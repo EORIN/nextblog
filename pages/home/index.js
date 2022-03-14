@@ -6,7 +6,7 @@ export default function Home() {
   
   return (
 
-    <>
+    <div className="container">
       <nav>
         <li>Home</li>
         <li>Home</li>
@@ -14,7 +14,7 @@ export default function Home() {
       <Layout>
         
       </Layout>
-    </>
+    </ div>
 
   )
 }
