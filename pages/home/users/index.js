@@ -6,11 +6,26 @@ import { CookiesProvider } from "react-cookie"
 import cookie from 'cookie'
 import { setCookies, getCookie } from "cookies-next"
 
-export default function HomePage({pageProps}) {
+export default function HomePage() {
+    
+    
 
+    async function checkCookie(){
+        const 
+        console.log(getCookie('cookiesnext').replace(/ '/g, ' "'))
+        console.log(getCookie('cookiesnext'))
+        const response = await axios.post('http://localhost:3005/checkcookie', {
+            cookie: getCookie('cookiesnext')
+        })
+        if(response){
+            alert(response)
+        }
+    }
+    
+    checkCookie()
     return (
         <div>
-            {console.log(getCookie('cookiesnext'))}
+            {/* {checkCookie()} */}
         </div>
       )
 }
