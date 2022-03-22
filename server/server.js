@@ -23,6 +23,12 @@ app.post('/test', (req, res)=>{
     res.send('ffsdgh')
 })
 
+app.post('/checkcookie', (req, res)=>{
+  console.log(req.body.cookie)
+  db.checkCookie(req.body.cookie)
+
+})
+
 app.post('/signin', async (req, res)=>{
     const email = req.body.email;
     const name = req.body.name;

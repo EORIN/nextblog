@@ -40,6 +40,13 @@ module.exports = {
         await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post}}})
     },
 
+    checkCookie: async function(cookie){
+        console.log(cookie)
+        const decoded = jsw.verify(cookie, secret);
+        console.log(decoded, 'f')
+    }
+    ,
+
     getposts: async function(email){
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
