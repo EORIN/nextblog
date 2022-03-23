@@ -17,6 +17,9 @@ export default function Layout({ children }) {
                 <li class="nav-item">
                     <a class="nav-link" href="#">Home 2</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home 3</a>
+                </li>
             </ul>
         </nav>
           

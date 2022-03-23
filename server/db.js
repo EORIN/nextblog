@@ -4,6 +4,8 @@ const mongoClient = new MongoClient(mongoDB);
 const bcrypt = require('bcrypt')
 const jsw = require('jsonwebtoken')
 const {secret} = require('../config')
+const jwt_decode = require('jwt-decode');
+const { ObjectId } = require("mongodb");
 
 const generateAccssToken = (id, name)=>{
     const payload = {id, name}
@@ -37,13 +39,25 @@ module.exports = {
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
         const collection = db.collection('users')
-        await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post}}})
+        await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post, time: new Date}}})
     },
 
     checkCookie: async function(cookie){
         console.log(cookie)
-        const decoded = jsw.verify(cookie, secret);
-        console.log(decoded, 'f')
+        const decode = jwt_decode(cookie)
+        await mongoClient.connect();
+        const db = mongoClient.db("usersdb");
+        const collection = db.collection('users')
+        console.log(decode, ObjectId(decode.id))
+        const user = await collection.findOne({_id: ObjectId(decode.id)})
+        console.log(user)
+        if(user){
+            return user
+        }
+        else{
+            console.log('HUI')
+        }
+
     }
     ,
 
@@ -70,7 +84,7 @@ module.exports = {
             }
         }
         else{
-            console.log('sd')
+            console.log('NO')
         }
     },
     validateSignIn: async function(email, password, callback){

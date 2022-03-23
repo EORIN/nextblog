@@ -5,38 +5,58 @@ import Layout from '../../cmp/Layout'
 import { CookiesProvider } from "react-cookie"
 import cookie from 'cookie'
 import { setCookies, getCookie } from "cookies-next"
+import ModalInput from "../../cmp/ModalInput"
 
 export default function HomePage() {
-    
-    
 
-    async function checkCookie(){
-        const 
-        console.log(getCookie('cookiesnext').replace(/ '/g, ' "'))
-        console.log(getCookie('cookiesnext'))
+    const [modalActive, setModalActve] = useState(false) 
+    const [modal, setModal] = useState(null) 
+    const [isValid, setIsValid] = useState(null);
+    const [data, setData] = useState({});
+    useEffect(()=>{
+        checkCookie()
+    }, [])
+
+    function inputModal(){
+        // setModal(<ModalInput name={data.name}></ModalInput>)
+        setModalActve(true)
+    }
+
+    const checkCookie = async function (){
         const response = await axios.post('http://localhost:3005/checkcookie', {
             cookie: getCookie('cookiesnext')
         })
         if(response){
-            alert(response)
+            console.log(response)
+            setData(response.data)
+            setIsValid(true)
+            return true
+        }
+        else{
+            return false
         }
     }
-    
-    checkCookie()
     return (
         <div>
-            {/* {checkCookie()} */}
+            <div className='d-flex justify-content-between container'>
+            <ul className="nav justify-content-center">
+                <li className="nav-item">
+                    <a className="nav-link " href="#">Active link</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="#">Link</a>
+                </li>
+                <li className="nav-item">
+                    { isValid !== null ? <a className="nav-link" onClick={inputModal} href="#">Add post</a> : <div></div>}
+                </li>
+                {/* {modal} */}
+            </ul>
+            <h1 className="navbar-brand" href="#">{ isValid !== null ? <div>{data.name}</div> : <div>Guest</div>}</h1>
         </div>
-      )
+        <ModalInput active={modalActive} setActive={setModalActve} name={data.name}></ModalInput>
+        </div>
+        
+    )
+
 }
 
-// export async function getStaticProps() {
-//     // const cookies = await (await fetch('https://example.com/posts'))?.json()
-//     console.log(cookie.user)
-//     // обратите внимание на сигнатуру
-//     return {
-//      pageProps: {
-//          cookie
-//     }
-//   }
-// }

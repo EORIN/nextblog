@@ -6,7 +6,7 @@ import { setCookies, getCookie } from "cookies-next"
 
 export default function Signin() {
 
-const [cookie, setCookie] = useCookies(["user"])
+// const [cookie, setCookie] = useCookies(["user"])
 const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
 
@@ -28,15 +28,12 @@ async function SignIn(){
     window.localStorage.setItem('token', response.data)
     alert(response.statusText)
 
-    setCookie("user", JSON.stringify(response.data), {
-      path: "/",
-      maxAge: 3600, // Expires after 1hr
-      sameSite: true,
-    })
-    setCookies('cookiesnext', JSON.stringify(response.data))
-    console.log(getCookie('cookiesnext'), 'g')
-    alert(cookie.user)
-
+    // setCookie("user", JSON.stringify(response.data), {
+    //   path: "/",
+    //   maxAge: 3600, // Expires after 1hr
+    //   sameSite: true,
+    // })
+    setCookies('cookiesnext', response.data)
     window.location.assign(`http://localhost:3000/home/users`)
   }
   else{

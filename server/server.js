@@ -1,17 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-
 const db = require('./db')
-const session = require('express-session')
-
 const app = express();
 app.use(bodyParser.json());
 
 app.use(cors())
-app.use(session({secret: 'my-secret'}));
-
-var sessions
 
 app.post('/accountdata', (req, res)=>{
   console.log(sessions)
@@ -23,10 +17,13 @@ app.post('/test', (req, res)=>{
     res.send('ffsdgh')
 })
 
-app.post('/checkcookie', (req, res)=>{
+app.post('/checkcookie', async (req, res)=>{
   console.log(req.body.cookie)
-  db.checkCookie(req.body.cookie)
-
+  const check = await db.checkCookie(req.body.cookie)
+  console.log(check)
+  if(check){
+    res.json(check)
+  }
 })
 
 app.post('/signin', async (req, res)=>{
@@ -60,8 +57,10 @@ app.post('/getposts', async (req, res)=>{
 })
 
 app.post('/addpost', async (req, res)=>{
-  console.log(req.body)
-  db.addpost(req.body.title, req.body.post, req.body.email)
+  console.log("SERVER111")
+
+  await db.addpost(req.body.text, req.body.title, req.body.name)
+  console.log("SERVER111")
   res.send('HI')
 })
 
