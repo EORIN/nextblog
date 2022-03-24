@@ -18,26 +18,17 @@ function handlePasswordChange(e){
 }
 
 async function SignIn(){
-  alert(`Email is ${email}, Password is ${password}`)
-  console.log(email, password)
   const response = await axios.post('http://localhost:3005/signin', {
       email: email,
       password: password
   })
-  if(response){
+  if(!response.data == false){
     window.localStorage.setItem('token', response.data)
-    alert(response.statusText)
-
-    // setCookie("user", JSON.stringify(response.data), {
-    //   path: "/",
-    //   maxAge: 3600, // Expires after 1hr
-    //   sameSite: true,
-    // })
     setCookies('cookiesnext', response.data)
     window.location.assign(`http://localhost:3000/home/users`)
   }
   else{
-    alert('No response :(')  
+    alert('Incorrect login or password')  
   }
   
    

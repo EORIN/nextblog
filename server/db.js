@@ -75,21 +75,6 @@ module.exports = {
         return(result)
         } 
     ,
-
-    // getposts: async function(){
-    //     await mongoClient.connect();
-    //     const db = mongoClient.db("usersdb");
-    //     const collection = db.collection('users')
-    //     const posts = await collection.find({}).toArray()
-    //     for (let index = 0; index < array.length; index++) {
-    //         const element = array[index];
-            
-    //     }
-        
-    //     console.log(data, data[2], 'dfhaergh')
-    //     return(data)
-    //     } 
-    // ,
     signin: async function(email, name, password) {
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
@@ -104,7 +89,7 @@ module.exports = {
             }
         }
         else{
-            console.log('NO')
+            return false
         }
     },
     validateSignIn: async function(email, password, callback){

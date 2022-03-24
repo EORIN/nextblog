@@ -31,12 +31,16 @@ app.post('/signin', async (req, res)=>{
     const name = req.body.name;
     const password = req.body.password;
     const token = await db.signin(email,  name, password)
-    console.log(token)
-    return res.json(token)
+    if (!token == false) {
+      return res.json(token)
+    }
+    else{
+      return res.send(false)
+    }
 })
 
 app.post('/signup', async (req, res)=>{
-    console.log(req.body)
+    
   await db.validateRegistration(req.body.name, req.body.email, req.body.password, (result)=>{
     if(result){
       db.signup(req.body.name, req.body.email, req.body.password)
