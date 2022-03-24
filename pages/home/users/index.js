@@ -3,6 +3,7 @@ import axios from 'axios'
 import { setCookies, getCookie } from "cookies-next"
 import ModalInput from "../../cmp/ModalInput"
 import Post from '../../cmp/Post'
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function HomePage() {
 
