@@ -39,7 +39,12 @@ module.exports = {
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
         const collection = db.collection('users')
+        const collectionPosts = db.collection('posts')
+        // await db.createCollection('posts')
+        await collectionPosts.insertOne({name: email, title: title, post: post, time: new Date})
+        // await collectionPosts.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post, time: new Date}}})
         await collection.updateOne({email: `${email}`}, {$push: {posts: {title: title, post: post, time: new Date}}})
+
     },
 
     checkCookie: async function(cookie){
@@ -60,16 +65,31 @@ module.exports = {
 
     }
     ,
-
-    getposts: async function(email){
+    getsortposts: async function(){
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");
-        const collection = db.collection('users')
-        const profile = await collection.findOne({email: email})
-        console.log(profile.posts)
-        return(profile.posts)
+        const collection = db.collection('posts')
+        const data = await collection.find({}).toArray()
+        const result = await collection.find({}).sort({time: -1}).toArray()
+        console.log(data, 'dfhaergh', result)
+        return(result)
         } 
     ,
+
+    // getposts: async function(){
+    //     await mongoClient.connect();
+    //     const db = mongoClient.db("usersdb");
+    //     const collection = db.collection('users')
+    //     const posts = await collection.find({}).toArray()
+    //     for (let index = 0; index < array.length; index++) {
+    //         const element = array[index];
+            
+    //     }
+        
+    //     console.log(data, data[2], 'dfhaergh')
+    //     return(data)
+    //     } 
+    // ,
     signin: async function(email, name, password) {
         await mongoClient.connect();
         const db = mongoClient.db("usersdb");

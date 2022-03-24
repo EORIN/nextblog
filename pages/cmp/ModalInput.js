@@ -20,6 +20,7 @@ const Modal = ({active, setActive, name}) => {
             text: text, title: title, name: name
         })
         console.log(response.data)
+        handleClose()
     }
     function handleClose(e){
         setActive(false)
@@ -27,7 +28,7 @@ const Modal = ({active, setActive, name}) => {
 
     return (
         
-        <div id="ModalUser" style={{position: "relative", background: "red", width: "80%", height: "50%", margin: "auto", top: "10%", borderColor: "dark", borderStyle: 'solid', borderRadius: '4px', borderWidth: "1px", visibility: `${active ? 'visible' : 'hidden'}`}}>
+        <div id="ModalUser" style={{position: "absolute" ,zIndex: '99999' , background: "red", width: "80%", height: "50%", margin: "auto", top: "10%", borderColor: "dark", borderStyle: 'solid', borderRadius: '4px', borderWidth: "1px", visibility: `${active ? 'visible' : 'hidden'}`}}>
             <button style={{position: "relative", float: "right"}} href="#" class="btn btn-primary active" role="button" onClick={handleClose} >X</button>
             <div class="form-group bg-light">
               <input type="text" name="" id="" class="form-control" placeholder="Title" aria-describedby="helpId" onChange={handleChangeTitle}/>

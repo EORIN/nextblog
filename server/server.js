@@ -51,7 +51,12 @@ app.post('/signup', async (req, res)=>{
 })
 
 app.post('/getposts', async (req, res)=>{
-  const result = await db.getposts(req.body.email)
+  const result = await db.getposts()
+  // console.log(result, 'fff')
+  res.send(result)
+})
+app.post('/getsortposts', async (req, res)=>{
+  const result = await db.getsortposts(req.body.email)
   console.log(result, 'fff')
   res.send(result)
 })
