@@ -6,16 +6,28 @@ import { CookiesProvider } from "react-cookie"
 import cookie from 'cookie'
 import { setCookies, getCookie } from "cookies-next"
 import ModalInput from "../../cmp/ModalInput"
+import Post from '../../cmp/Post'
 
 export default function HomePage() {
 
     const [modalActive, setModalActve] = useState(false) 
     const [modal, setModal] = useState(null) 
+    const [sortDataPosts, setSortDataPosts] = useState([]) 
     const [isValid, setIsValid] = useState(null);
     const [data, setData] = useState({});
     useEffect(()=>{
         checkCookie()
+        getSortPosts()
     }, [])
+
+    async function getSortPosts(){
+        
+        const response = await axios.post('http://localhost:3005/getsortposts')
+        // const data = await response.json()
+        setSortDataPosts(response.data)
+        console.log(sortDataPosts)
+        return sortDataPosts.map( e =>{<h1>sdh</h1>})
+    }
 
     function inputModal(){
         // setModal(<ModalInput name={data.name}></ModalInput>)
@@ -36,8 +48,12 @@ export default function HomePage() {
             return false
         }
     }
+    const displayPosts = ()=>{
+        return sortDataPosts.map( e =>{<h1>sdh</h1>})
+        
+    }
     return (
-        <div>
+        <div className='container'>
             <div className='d-flex justify-content-between container'>
             <ul className="nav justify-content-center">
                 <li className="nav-item">
@@ -54,6 +70,11 @@ export default function HomePage() {
             <h1 className="navbar-brand" href="#">{ isValid !== null ? <div>{data.name}</div> : <div>Guest</div>}</h1>
         </div>
         <ModalInput active={modalActive} setActive={setModalActve} name={data.name}></ModalInput>
+        {console.log(sortDataPosts)}
+        {<ul>
+            {sortDataPosts.map(e=><li><Post title={e.title}></Post></li>)}       
+        </ul>}
+        
         </div>
         
     )
