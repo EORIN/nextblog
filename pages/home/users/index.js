@@ -1,9 +1,5 @@
-import Link from 'next/link'
 import React, { useState, useEffect  } from 'react'
 import axios from 'axios'
-import Layout from '../../cmp/Layout'
-import { CookiesProvider } from "react-cookie"
-import cookie from 'cookie'
 import { setCookies, getCookie } from "cookies-next"
 import ModalInput from "../../cmp/ModalInput"
 import Post from '../../cmp/Post'
@@ -21,16 +17,13 @@ export default function HomePage() {
     }, [])
 
     async function getSortPosts(){
-        
         const response = await axios.post('http://localhost:3005/getsortposts')
-        // const data = await response.json()
         setSortDataPosts(response.data)
         console.log(sortDataPosts)
         return sortDataPosts.map( e =>{<h1>sdh</h1>})
     }
 
     function inputModal(){
-        // setModal(<ModalInput name={data.name}></ModalInput>)
         setModalActve(true)
     }
 
@@ -47,10 +40,6 @@ export default function HomePage() {
         else{
             return false
         }
-    }
-    const displayPosts = ()=>{
-        return sortDataPosts.map( e =>{<h1>sdh</h1>})
-        
     }
     return (
         <div className='container'>
@@ -71,8 +60,8 @@ export default function HomePage() {
         </div>
         <ModalInput active={modalActive} setActive={setModalActve} name={data.name}></ModalInput>
         {console.log(sortDataPosts)}
-        {<ul>
-            {sortDataPosts.map(e=><li><Post title={e.title}></Post></li>)}       
+        {<ul className='list-group'>
+            {sortDataPosts.map(e=><li className='list-group-item'><Post title={e.title}></Post></li>)}       
         </ul>}
         
         </div>

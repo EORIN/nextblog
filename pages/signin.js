@@ -3,6 +3,7 @@ import { useState  } from 'react'
 import axios from 'axios'
 import { useCookies } from "react-cookie"
 import { setCookies, getCookie } from "cookies-next"
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function Signin() {
 

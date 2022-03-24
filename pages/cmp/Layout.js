@@ -1,8 +1,6 @@
-// import Navbar from './navbar'
-// import Footer from './footer'
-
 import Link from "next/link";
 import { session } from "passport/lib";
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function Layout({ children }) {
   return (
@@ -22,11 +20,11 @@ export default function Layout({ children }) {
                 </li>
             </ul>
         </nav>
-          
+
       {/* </nav> */}
         <main className="container container-fluid">{children}</main>
-        
+
       <footer />
     </div >
   )
-}
+} 

@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { useState  } from 'react'
 import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function Signup() {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  
+
 function handleEmailChange(e){
     setEmail(e.target.value)
 }
