@@ -32,7 +32,6 @@ module.exports = {
     }catch(err) {
         console.log(err);
     } finally {
-        await mongoose.close();
     }
 },
     addpost: async function(title, post, email){
